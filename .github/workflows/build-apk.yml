@@ -32,6 +32,11 @@ jobs:
         with:
           gradle-version: '8.9'
 
+      - name: Fix JVM targets
+        working-directory: build-src/VentureBridgeAndroid
+        run: |
+          sed -i '/android {/a\    compileOptions {\n        sourceCompatibility JavaVersion.VERSION_17\n        targetCompatibility JavaVersion.VERSION_17\n    }\n    kotlinOptions {\n        jvmTarget = "17"\n    }' app/build.gradle.kts
+
       - name: Build APK
         working-directory: build-src/VentureBridgeAndroid
         run: gradle assembleDebug
